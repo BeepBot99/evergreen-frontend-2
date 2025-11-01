@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@plugin 'daisyui' {
+    themes: forest --default --prefersdark, night, winter, lemonade;
+}
+
+.dockview-theme-evergreen {
+    @apply p-3 bg-base-100;
+    --dv-icon-hover-background-color: rgba(90, 93, 94, 0.31);
+    --dv-active-sash-transition-duration: 250ms;
+    --dv-active-sash-transition-delay: 50ms;
+    --dv-tab-font-size: var(--text-sm);
+    --dv-tab-margin: 0.5rem 0.25rem;
+    --dv-tabs-and-actions-container-height: --spacing(12);
+    --dv-drag-over-border: 2px solid var(--color-accent);
+    --dv-group-view-background-color: var(--color-base-100);
+    --dv-tabs-and-actions-container-background-color: var(--color-base-200);
+    --dv-activegroup-visiblepanel-tab-background-color: var(--color-neutral);
+    --dv-inactivegroup-visiblepanel-tab-background-color: color-mix(
+            in srgb,
+            var(--color-neutral) 70%,
+            var(--color-base-200) 30%
+    );
+    --dv-activegroup-hiddenpanel-tab-background-color: color-mix(
+            in srgb,
+            var(--color-neutral) 50%,
+            var(--color-base-200) 50%
+    );
+    --dv-inactivegroup-hiddenpanel-tab-background-color: color-mix(
+            in srgb,
+            var(--color-neutral) 50%,
+            var(--color-base-200) 50%
+    );
+    --dv-activegroup-visiblepanel-tab-color: var(--color-neutral-content);
+    --dv-activegroup-hiddenpanel-tab-color: var(--color-neutral-content);
+    --dv-inactivegroup-visiblepanel-tab-color: var(--color-neutral-content);
+    --dv-inactivegroup-hiddenpanel-tab-color: var(--color-neutral-content);
+    --dv-active-sash-color: var(--color-accent);
+}
+
+.dockview-theme-evergreen .dv-resize-container:has(> .dv-groupview),
+.dockview-theme-evergreen .dv-sash,
+.dockview-theme-evergreen .dv-drop-target-anchor.dv-drop-target-content,
+.dockview-theme-evergreen .dv-tabs-overflow-container,
+.dockview-theme-evergreen .dv-tabs-overflow-dropdown-default,
+.dockview-theme-evergreen .dv-groupview {
+    @apply rounded-box;
+}
+
+.dockview-theme-evergreen .dv-drop-target-anchor,
+.dockview-theme-evergreen .dv-tab {
+    @apply rounded-field;
+}
+
+.dockview-theme-evergreen .dv-resize-container {
+    @apply rounded-box! border-none;
+}
+
+.dockview-theme-evergreen .dv-tabs-overflow-container,
+.dockview-theme-evergreen .dv-tabs-overflow-dropdown-default {
+    @apply h-[unset]!;
+}
+
+.dockview-theme-evergreen .dv-tab {
+    @apply p-3;
+}
+
+.dockview-theme-evergreen .dv-tab .dv-svg {
+    @apply size-2;
+}
+
+.dockview-theme-evergreen .dv-groupview .dv-tabs-and-actions-container {
+    @apply py-0 px-2;
+}
+
+.dockview-theme-evergreen .dv-groupview .dv-content-container {
+    @apply p-4 bg-base-200;
+}
+
+.dockview-theme-evergreen .dv-resize-container .dv-groupview {
+    @apply border border-base-300;
+}
