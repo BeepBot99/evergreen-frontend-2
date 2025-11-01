@@ -1,12 +1,25 @@
-import {atom, type PrimitiveAtom, useAtomValue} from "jotai";
+import {atom, type PrimitiveAtom} from "jotai";
+import {atomWithStorage} from "jotai/utils";
 import type {Toolbar} from "../components/navbar/Navbar";
 import type {AvailableDisplay} from "../components/navbar/DisplayHandle";
+import type {SerializedDockview} from "dockview-react";
 
 export const toolbarAtom: PrimitiveAtom<Toolbar> = atom<Toolbar>(null);
 
 export const availableDisplaysAtom: PrimitiveAtom<AvailableDisplay[]> = atom<AvailableDisplay[]>([]);
 
-export function useGetAvailableDisplay() {
-    const availableDisplays = useAtomValue(availableDisplaysAtom)
-    return (id: string) => availableDisplays.find(it => it.id === id)
-}
+const layoutStringAtom = atomWithStorage<string | null>("layout", null)
+export const layoutAtom = atom(
+    get => {
+        const layoutString = get(layoutStringAtom)
+        try {
+            if (layoutString) return JSON.parse(layoutString) as SerializedDockview
+        } catch (e) {
+            console.error(e)
+        }
+        return null
+    },
+    (_get, set, layout: SerializedDockview) => {
+        set(layoutStringAtom, JSON.stringify(layout))
+    }
+)
