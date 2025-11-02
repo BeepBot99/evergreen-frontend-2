@@ -23,3 +23,5 @@ export const layoutAtom = atom(
         set(layoutStringAtom, JSON.stringify(layout))
     }
 )
+
+export const dndTipDismissedAtom = atomWithStorage("dnd-tip-dismissed", false)

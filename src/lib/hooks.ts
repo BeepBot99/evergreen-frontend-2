@@ -1,11 +1,11 @@
 import {useSetImmerAtom} from "jotai-immer";
-import {availableDisplaysAtom, layoutAtom} from "./state";
+import {availableDisplaysAtom, dndTipDismissedAtom, layoutAtom} from "./state";
 import {useCallback, useEffect, useState} from "react";
 import OpModeSelector from "../components/OpModeSelector";
 import {DockviewApi, type DockviewIDisposable, type DockviewReadyEvent, positionToDirection} from "dockview-react";
 import * as uuid from "uuid";
 import {displayToParams, type PanelParams} from "./params";
-import {useAtom, useAtomValue} from "jotai";
+import {useAtom, useAtomValue, useSetAtom} from "jotai";
 
 export function useDefaultDisplays() {
     const setAvailableDisplays = useSetImmerAtom(availableDisplaysAtom)
@@ -62,6 +62,7 @@ export function useDockview() {
     const getAvailableDisplay = useGetAvailableDisplay()
     const setAvailableDisplays = useSetImmerAtom(availableDisplaysAtom)
     const [layout, setLayout] = useAtom(layoutAtom)
+    const setDndTipDismissed = useSetAtom(dndTipDismissedAtom)
 
     useEffect(() => {
         if (!api) return;
@@ -114,20 +115,21 @@ export function useDockview() {
 
         disposables.push(
             api.onDidLayoutChange(() => {
-                setLayout(api.toJSON())
+                setLayout(api.toJSON());
             })
         )
 
         disposables.push(
             api.onDidAddPanel(() => {
-                setLayout(api.toJSON())
+                setLayout(api.toJSON());
+                setDndTipDismissed(true);
             })
         )
 
         return () => {
             disposables.forEach(disposable => { disposable.dispose(); });
         }
-    }, [api, getAvailableDisplay, setAvailableDisplays, setLayout])
+    }, [api, getAvailableDisplay, layout, setAvailableDisplays, setDndTipDismissed, setLayout])
 
     return useCallback((event: DockviewReadyEvent) => {
         setApi(event.api);

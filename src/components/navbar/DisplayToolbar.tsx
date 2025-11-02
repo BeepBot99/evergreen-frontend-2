@@ -1,13 +1,14 @@
 import {type ReactNode, useMemo, useState} from "react";
 import {DisplayHandle} from "./DisplayHandle";
-import {useAtomValue} from "jotai";
-import {availableDisplaysAtom} from "../../lib/state";
+import {useAtom, useAtomValue} from "jotai";
+import {availableDisplaysAtom, dndTipDismissedAtom} from "../../lib/state";
 import Fuse from "fuse.js";
-import {Search} from "lucide-react";
+import {Search, X} from "lucide-react";
 
 export default function DisplayToolbar(): ReactNode {
     const [searchQuery, setSearchQuery] = useState("")
     const availableDisplays = useAtomValue(availableDisplaysAtom)
+    const [dndTipDismissed, setDndTipDismissed] = useAtom(dndTipDismissedAtom)
 
     const fuse = useMemo(() => new Fuse(availableDisplays, {
         keys: ["name"],
@@ -36,6 +37,16 @@ export default function DisplayToolbar(): ReactNode {
                         )
                     )}
                 </div>
+
+                {!dndTipDismissed &&
+                  <div className="toast toast-top toast-end">
+                    <div className="alert alert-info">
+                      Drag and drop a display to get started.
+                      <button onClick={() => { setDndTipDismissed(true); }} className="btn btn-ghost btn-xs" type="button" aria-label="Dismiss">
+                        <X className="size-4"/>
+                      </button>
+                    </div>
+                  </div>}
             </>
         )
     }
