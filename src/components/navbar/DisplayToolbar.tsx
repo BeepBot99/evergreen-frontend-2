@@ -3,6 +3,7 @@ import {DisplayHandle} from "./DisplayHandle";
 import {useAtomValue} from "jotai";
 import {availableDisplaysAtom} from "../../lib/state";
 import Fuse from "fuse.js";
+import {Search} from "lucide-react";
 
 export default function DisplayToolbar(): ReactNode {
     const [searchQuery, setSearchQuery] = useState("")
@@ -23,18 +24,7 @@ export default function DisplayToolbar(): ReactNode {
         return (
             <>
                 <label className="input w-full text-base-content">
-                    <svg className="size-4 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <g
-                            strokeLinejoin="round"
-                            strokeLinecap="round"
-                            strokeWidth="2.5"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.3-4.3"></path>
-                        </g>
-                    </svg>
+                    <Search opacity={0.5} className="size-4"/>
                     <input type="search" placeholder="Search" value={searchQuery} onChange={e => {
                         setSearchQuery(e.target.value)
                     }}/>

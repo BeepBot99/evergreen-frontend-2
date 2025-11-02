@@ -17,6 +17,7 @@
     "immer": "^10.2.0",
     "jotai": "^2.15.0",
     "jotai-immer": "^0.4.1",
+    "lucide-react": "^0.552.0",
     "motion": "^12.23.24",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import clsx from "clsx";
+import {ChevronDown} from "lucide-react";
 
 const themes = ["forest", "night", "winter", "lemonade"] as const
 type Theme = typeof themes[number]
@@ -21,10 +22,7 @@ export default function ThemeController() {
         <div className="dropdown mr-5">
             <div tabIndex={0} role="button" className="btn m-1">
                 Theme
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                     stroke="currentColor" className="size-3">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                </svg>
+                <ChevronDown className="size-3"/>
             </div>
             <ul className="dropdown-content bg-base-300 w-30 rounded-box z-1 p-2 shadow-2xl">
                 {themes.map(theme => (
