@@ -67,7 +67,17 @@ export function useDockview() {
     useEffect(() => {
         if (!api) return;
 
-        if (layout) api.fromJSON(layout);
+        if (layout) {
+            api.fromJSON(layout);
+
+            Object.values(layout.panels).forEach(panel => {
+                const id = (panel.params as PanelParams).id;
+                setAvailableDisplays(draft => {
+                    const display = draft.find(display => display.id === id);
+                    if (display) display.used = true;
+                })
+            })
+        }
 
         const disposables: DockviewIDisposable[] = []
 
@@ -106,10 +116,6 @@ export function useDockview() {
                     title: display.name,
                     params: displayToParams(display)
                 });
-                setAvailableDisplays(draft => {
-                    const display = draft.find(display => display.id === id);
-                    if (display) display.used = true;
-                })
             })
         )
 
@@ -120,14 +126,22 @@ export function useDockview() {
         )
 
         disposables.push(
-            api.onDidAddPanel(() => {
+            api.onDidAddPanel(panel => {
                 setLayout(api.toJSON());
                 setDndTipDismissed(true);
+
+                const id = (panel.params as PanelParams).id;
+                setAvailableDisplays(draft => {
+                    const display = draft.find(display => display.id === id);
+                    if (display) display.used = true;
+                })
             })
         )
 
         return () => {
-            disposables.forEach(disposable => { disposable.dispose(); });
+            disposables.forEach(disposable => {
+                disposable.dispose();
+            });
         }
     }, [api, getAvailableDisplay, layout, setAvailableDisplays, setDndTipDismissed, setLayout])
 

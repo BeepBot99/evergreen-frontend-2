@@ -4,7 +4,7 @@ import type {Toolbar} from "../components/navbar/Navbar";
 import type {AvailableDisplay} from "../components/navbar/DisplayHandle";
 import type {SerializedDockview} from "dockview-react";
 
-export const toolbarAtom: PrimitiveAtom<Toolbar> = atom<Toolbar>(null);
+export const toolbarAtom: PrimitiveAtom<Toolbar> = atomWithStorage<Toolbar>("toolbar", null);
 
 export const availableDisplaysAtom: PrimitiveAtom<AvailableDisplay[]> = atom<AvailableDisplay[]>([]);
 
